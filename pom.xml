@@ -13,7 +13,7 @@
     <description>Transport SOAP messages using SAAJ</description>
 
     <properties>
-        <mule.version>2.2.0</mule.version>
+        <mule.version>2.2.1</mule.version>
         <!-- Tools properties -->
         <eclipsePluginVersion>2.5</eclipsePluginVersion>
         <vmtype>org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType</vmtype>
