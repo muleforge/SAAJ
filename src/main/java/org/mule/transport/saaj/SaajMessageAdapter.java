@@ -25,7 +25,7 @@ import java.util.Iterator;
  * <code>SaajMessageAdapter</code> allows a <code>MuleEvent</code> to access the
  * properties and payload of a Saaj SOAPMessage in a uniform way.  It expects a
  * message of type <code>SOAPMessage</code> and will throw a
- * <code>MessageTypeNotSupportedException</code>.
+ * <code>MessageTypeNotSupportedException</code> if not.
  */
 public class SaajMessageAdapter extends AbstractMessageAdapter {
 
