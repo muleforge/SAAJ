@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 
-public class SaajMessageReceiverFunctionalTestCase extends FunctionalTestCase {
+public class ReceptionFunctionalTestCase extends FunctionalTestCase {
 
     Transformer xmlToDom;
     Transformer domToXml;

@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
 
-public class SaajMessageDispatcherFunctionalTestCase extends FunctionalTestCase {
+public class DispatchFunctionalTestCase extends FunctionalTestCase {
 
     private static String XML_GET_PEOPLE_RESPONSE = "src/test/resources/get-people-response.xml";
 
