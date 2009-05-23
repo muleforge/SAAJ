@@ -2,12 +2,13 @@ package org.mule.transport.saaj;
 
 import org.mule.tck.FunctionalTestCase;
 import org.mule.module.client.MuleClient;
+import org.mule.module.xml.transformer.XmlPrettyPrinter;
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.Transformer;
+import org.custommonkey.xmlunit.XMLUnit;
 
 import java.util.Map;
 import java.util.HashMap;
-
 
 public class ReceptionFunctionalTestCase extends FunctionalTestCase {
 
@@ -29,6 +30,7 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
         documentToSoapMessage = muleContext.getRegistry().lookupTransformer("documentToSoapMessage");
     }
 
+    @SuppressWarnings({"unchecked"})
     public void testReceiveMessage() throws Exception {
         MuleClient client = new MuleClient(muleContext);
 
@@ -40,10 +42,16 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
 
         MuleMessage response = client.request("vm://out", 15000);
         assertNotNull(response);
-        // ToDo Use XMLUnit to assert response XML is similar
-        /*
-        assertEquals(ADD_PERSON_SOAP_REQUEST,
-                uglyXmlToPrettyXml.transform(domToXml.transform(response.getPayload()))); */
+
+        String xml1;
+        String xml2;
+
+        Transformer transformer = new XmlPrettyPrinter();
+        xml1 = (String) transformer.transform(ADD_PERSON_SOAP_REQUEST);
+        xml2 = (String) transformer.transform(domToXml.transform(response.getPayload()));
+        assertTrue(XMLUnit.compareXML(xml1, xml2).similar());
+        assertEquals("a header", response.getProperty("header1"));
+        assertEquals("another header", response.getProperty("another header"));
 
     }
 

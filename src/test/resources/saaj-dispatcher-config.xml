@@ -26,7 +26,7 @@
     <saaj:soap-message-to-document-transformer name="soapBodyToDocument"/>
     <saaj:document-to-soap-message-transformer name="documentToSoapMessage"/>
 
-    <model name="saajDispatcherModel">
+    <model name="saajDispatcherModel">        
 
         <service name="soapService">
             <inbound>
