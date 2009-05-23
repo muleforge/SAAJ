@@ -31,15 +31,25 @@
 
     <model name="saajReceiverModel">
 
-        <service name="saajReceiverService">
+        <service name="saajProxy">
             <inbound>
-                <vm:inbound-endpoint path="in">
-                    <saaj:soap-message-to-document-transformer/>
-                </vm:inbound-endpoint>
+                <vm:inbound-endpoint path="document.in"/>
             </inbound>
             <outbound>
                 <pass-through-router>
-                    <vm:outbound-endpoint path="out"/>
+                    <vm:outbound-endpoint path="soap.out">
+                        <transformers>
+                            <message-properties-transformer>
+                                <delete-message-property key="MULE_CORRELATION_ID"/>
+                                <delete-message-property key="MULE_ENCODING"/>
+                                <delete-message-property key="MULE_ENDPOINT"/>
+                                <delete-message-property key="MULE_ORIGINATING_ENDPOINT"/>
+                                <delete-message-property key="MULE_REMOTE_SYNC"/>
+                                <delete-message-property key="MULE_SESSION"/>                                                                
+                            </message-properties-transformer>
+                            <saaj:document-to-soap-message-transformer/>
+                        </transformers>
+                    </vm:outbound-endpoint>
                 </pass-through-router>
             </outbound>
         </service>

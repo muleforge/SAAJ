@@ -1,14 +1,15 @@
 package org.mule.transport.saaj;
 
-import org.mule.tck.FunctionalTestCase;
-import org.mule.module.client.MuleClient;
-import org.mule.module.xml.transformer.XmlPrettyPrinter;
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.Transformer;
+import org.mule.module.client.MuleClient;
+import org.mule.module.xml.transformer.XmlPrettyPrinter;
+import org.mule.tck.FunctionalTestCase;
 import org.custommonkey.xmlunit.XMLUnit;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class ReceptionFunctionalTestCase extends FunctionalTestCase {
 
@@ -17,6 +18,7 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
     Transformer uglyXmlToPrettyXml;
     Transformer soapMessageToDocument;
     Transformer documentToSoapMessage;
+
 
     protected String getConfigResources() {
         return "src/test/resources/saaj-receiver-config.xml";
@@ -28,36 +30,50 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
         uglyXmlToPrettyXml = muleContext.getRegistry().lookupTransformer("uglyXmlToPrettyXml");
         soapMessageToDocument = muleContext.getRegistry().lookupTransformer("soapBodyToDocument");
         documentToSoapMessage = muleContext.getRegistry().lookupTransformer("documentToSoapMessage");
+
+        super.doSetUp();
     }
 
-    @SuppressWarnings({"unchecked"})
-    public void testReceiveMessage() throws Exception {
-        MuleClient client = new MuleClient(muleContext);
+    public void testEventCallback() throws Exception {
 
+        MuleClient client = new MuleClient(muleContext);
         Map properties = new HashMap();
         properties.put("header1", "a header");
         properties.put("header2", "another header");
-        client.send("vm://in",
-                documentToSoapMessage.transform(xmlToDom.transform(ADD_PERSON_SOAP_REQUEST)), properties);
+        client.send("vm://document.in", xmlToDom.transform(ADD_PERSON_REQUEST), properties);
+        MuleMessage result = client.request("vm://soap.out", 15000);
+        assertNotNull(result);
+        assertTrue(compareXML(ADD_PERSON_SOAP_REQUEST, result.getPayloadAsString()));
+    }
 
-        MuleMessage response = client.request("vm://out", 15000);
-        assertNotNull(response);
-
+    boolean compareXML(String s1, String s2) {
         String xml1;
         String xml2;
 
-        Transformer transformer = new XmlPrettyPrinter();
-        xml1 = (String) transformer.transform(ADD_PERSON_SOAP_REQUEST);
-        xml2 = (String) transformer.transform(domToXml.transform(response.getPayload()));
-        assertTrue(XMLUnit.compareXML(xml1, xml2).similar());
-        assertEquals("a header", response.getProperty("header1"));
-        assertEquals("another header", response.getProperty("another header"));
+        try {
+            Transformer transformer = new XmlPrettyPrinter();
+            xml1 = (String) transformer.transform(s1);
+            xml2 = (String) transformer.transform(s2);
+            return XMLUnit.compareXML(xml1, xml2).similar();
+        } catch (Exception ex) {
+            return false;
 
+        }
     }
 
-    private static String ADD_PERSON_SOAP_REQUEST =
+    private static String ADD_PERSON_REQUEST =
             " <ser:addPerson1  xmlns:ser=\"http://services.testmodels.tck.mule.org/\">\n" +
                     "         <ser:arg0>John</ser:arg0>\n" +
                     "         <ser:arg1>DEmic</ser:arg1>\n" +
                     "      </ser:addPerson1>";
+
+    private static String ADD_PERSON_SOAP_REQUEST =
+           "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+                   "<SOAP-ENV:Header>" +
+                   "<mule-saaj:header1 xmlns:mule-saaj=\"http://www.mulesource.org/schema/mule/saaj/2.2\">a header</mule-saaj:header1>" +
+                   "<mule-saaj:header2 xmlns:mule-saaj=\"http://www.mulesource.org/schema/mule/saaj/2.2\">another header</mule-saaj:header2>" +
+                   "</SOAP-ENV:Header><SOAP-ENV:Body><ser:addPerson1 xmlns:ser=\"http://services.testmodels.tck.mule.org/\">\n" +
+                   "         <ser:arg0>John</ser:arg0>\n" +
+                   "         <ser:arg1>DEmic</ser:arg1>\n" +
+                   "      </ser:addPerson1></SOAP-ENV:Body></SOAP-ENV:Envelope>";
 }
