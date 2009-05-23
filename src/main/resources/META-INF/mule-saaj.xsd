@@ -13,7 +13,7 @@
     <xsd:import namespace="http://www.mulesource.org/schema/mule/core/2.2"
                 schemaLocation="http://www.mulesource.org/schema/mule/core/2.2/mule.xsd"/>
 
-    <xsd:element name="soapbody-to-document-transformer" type="mule:abstractTransformerType"
+    <xsd:element name="soap-message-to-document-transformer" type="mule:abstractTransformerType"
                  substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
             <xsd:documentation>

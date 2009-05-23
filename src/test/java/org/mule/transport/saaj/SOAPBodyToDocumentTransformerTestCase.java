@@ -33,7 +33,7 @@ public class SOAPBodyToDocumentTransformerTestCase extends AbstractTransformerTe
     }
 
     public Transformer getTransformer() throws Exception {
-        return new SOAPBodyToDocumentTransformer();
+        return new SOAPMessageToDocumentTransformer();
     }
 
     public Transformer getRoundTripTransformer() throws Exception {

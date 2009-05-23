@@ -9,27 +9,19 @@
  */
 package org.mule.transport.saaj.config;
 
-import org.mule.config.spring.parsers.generic.OrphanDefinitionParser;
-import org.mule.config.spring.parsers.generic.ChildDefinitionParser;
-import org.mule.config.spring.parsers.specific.endpoint.TransportEndpointDefinitionParser;
-import org.mule.config.spring.parsers.specific.endpoint.GenericEndpointDefinitionParser;
 import org.mule.config.spring.parsers.specific.TransformerDefinitionParser;
 import org.mule.config.spring.handlers.AbstractMuleNamespaceHandler;
 import org.mule.transport.saaj.*;
-import org.mule.endpoint.URIBuilder;
-
-import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 /**
  * Registers a Bean Definition Parser for handling <code><saaj:connector></code> elements.
  */
 public class SaajNamespaceHandler extends AbstractMuleNamespaceHandler {
     public void init() {
-        registerBeanDefinitionParser("soapbody-to-document-transformer",
-                new TransformerDefinitionParser(SOAPBodyToDocumentTransformer.class));
+        registerBeanDefinitionParser("soap-message-to-document-transformer",
+                new TransformerDefinitionParser(SOAPMessageToDocumentTransformer.class));
         registerBeanDefinitionParser("document-to-soap-message-transformer",
                 new TransformerDefinitionParser(DocumentToSOAPMessageTransformer.class));
         
-
     }
 }

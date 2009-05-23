@@ -19,11 +19,11 @@ import java.io.ByteArrayInputStream;
  * <code>SOAPBodyToDocumentTransformer</code> Transform the payload of a <code>SOAPBody</code>,
  * from a <code>SOAPMessage</code>,to a <code>org.w3c.dom.Document</code>.
  */
-public class SOAPBodyToDocumentTransformer extends AbstractTransformer {
+public class SOAPMessageToDocumentTransformer extends AbstractTransformer {
 
     DocumentBuilder builder;
 
-    public SOAPBodyToDocumentTransformer() {
+    public SOAPMessageToDocumentTransformer() {
         super();
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

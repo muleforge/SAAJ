@@ -23,7 +23,7 @@
     <xm:dom-to-xml-transformer name="domToXml" returnClass="java.lang.String"/>
     <xm:xml-prettyprinter-transformer name="uglyXmlToPrettyXml" returnClass="java.lang.String"/>
 
-    <saaj:soapbody-to-document-transformer name="soapBodyToDocument"/>
+    <saaj:soap-message-to-document-transformer name="soapBodyToDocument"/>
     <saaj:document-to-soap-message-transformer name="documentToSoapMessage"/>
 
     <model name="saajDispatcherModel">
