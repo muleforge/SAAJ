@@ -13,8 +13,8 @@ import javax.xml.soap.*;
  */
 public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransformer {
 
-    private static String MULE_SAAJ_HEADER_URI = "http://www.mulesource.org/schema/mule/saaj/2.2";
-    private static String MULE_SAAJ_HEADER_PREFIX = "mule-saaj";
+    private String headerURI = "http://www.mulesource.org/schema/mule/saaj/2.2";
+    private String headerPrefix = "mule-saaj";
 
     private SOAPFactory soapFactory;
     private MessageFactory messageFactory;
@@ -22,6 +22,14 @@ public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransf
     public DocumentToSOAPMessageTransformer() throws Exception {
         soapFactory = SOAPFactory.newInstance();
         messageFactory = MessageFactory.newInstance();
+    }
+
+    public void setHeaderURI(String headerURI) {
+        this.headerURI = headerURI;
+    }
+
+    public void setHeaderPrefix(String headerPrefix) {
+        this.headerPrefix = headerPrefix;
     }
 
     public Object transform(MuleMessage muleMessage, String s) throws TransformerException {
@@ -42,13 +50,12 @@ public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransf
         return SaajUtils.getSOAPMessageAsBytes(soapMessage);
     }
 
-
     void populateHeaders(MuleMessage muleMessage, SOAPMessage soapMessage) throws SOAPException {
         for (Object n : muleMessage.getPropertyNames()) {
             String propertyName = (String) n;
             SOAPHeader header = soapMessage.getSOAPHeader();
 
-            Name name = soapFactory.createName(propertyName, MULE_SAAJ_HEADER_PREFIX, MULE_SAAJ_HEADER_URI);
+            Name name = soapFactory.createName(propertyName, headerPrefix, headerURI);
             SOAPHeaderElement headerElement = header.addHeaderElement(name);
             headerElement.addTextNode(muleMessage.getProperty(propertyName).toString());
         }

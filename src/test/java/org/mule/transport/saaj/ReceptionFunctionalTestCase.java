@@ -33,7 +33,7 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
         super.doSetUp();
     }
 
-    public void testEventCallback() throws Exception {
+    public void testMessageDispatched() throws Exception {
 
         MuleClient client = new MuleClient(muleContext);
         Map properties = new HashMap();
@@ -43,6 +43,18 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
         MuleMessage result = client.request("vm://soap.out", 15000);
         assertNotNull(result);
         assertTrue(compareXML(ADD_PERSON_SOAP_REQUEST, result.getPayloadAsString()));
+    }
+
+    public void testMessageDispatchedWithCustomNamespace() throws Exception {
+
+        MuleClient client = new MuleClient(muleContext);
+        Map properties = new HashMap();
+        properties.put("header1", "a header");
+        properties.put("header2", "another header");
+        client.send("vm://namespace.in", xmlToDom.transform(ADD_PERSON_REQUEST), properties);
+        MuleMessage result = client.request("vm://namespace.out", 15000);
+        assertNotNull(result);
+        assertTrue(compareXML(ADD_PERSON_SOAP_REQUEST_WITH_CUSTOM_NS, result.getPayloadAsString()));
     }
 
     boolean compareXML(String s1, String s2) {
@@ -69,12 +81,19 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
 
     // ToDo Externalize this to a file
     private static String ADD_PERSON_SOAP_REQUEST =
-           "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
-                   "<SOAP-ENV:Header>" +
-                   "<mule-saaj:header1 xmlns:mule-saaj=\"http://www.mulesource.org/schema/mule/saaj/2.2\">a header</mule-saaj:header1>" +
-                   "<mule-saaj:header2 xmlns:mule-saaj=\"http://www.mulesource.org/schema/mule/saaj/2.2\">another header</mule-saaj:header2>" +
-                   "</SOAP-ENV:Header><SOAP-ENV:Body><ser:addPerson1 xmlns:ser=\"http://services.testmodels.tck.mule.org/\">\n" +
-                   "         <ser:arg0>John</ser:arg0>\n" +
-                   "         <ser:arg1>DEmic</ser:arg1>\n" +
-                   "      </ser:addPerson1></SOAP-ENV:Body></SOAP-ENV:Envelope>";
+            "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+                    "<SOAP-ENV:Header>" +
+                    "<mule-saaj:header1 xmlns:mule-saaj=\"http://www.mulesource.org/schema/mule/saaj/2.2\">a header</mule-saaj:header1>" +
+                    "<mule-saaj:header2 xmlns:mule-saaj=\"http://www.mulesource.org/schema/mule/saaj/2.2\">another header</mule-saaj:header2>" +
+                    "</SOAP-ENV:Header><SOAP-ENV:Body><ser:addPerson1 xmlns:ser=\"http://services.testmodels.tck.mule.org/\">\n" +
+                    "         <ser:arg0>John</ser:arg0>\n" +
+                    "         <ser:arg1>DEmic</ser:arg1>\n" +
+                    "      </ser:addPerson1></SOAP-ENV:Body></SOAP-ENV:Envelope>";
+
+    // ToDo Externalize this to a file
+    private static String ADD_PERSON_SOAP_REQUEST_WITH_CUSTOM_NS =
+            "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><demic:header1 xmlns:demic=\"http://demic.com\">a header</demic:header1><demic:header2 xmlns:demic=\"http://demic.com\">another header</demic:header2></SOAP-ENV:Header><SOAP-ENV:Body><ser:addPerson1 xmlns:ser=\"http://services.testmodels.tck.mule.org/\">\n" +
+                    "         <ser:arg0>John</ser:arg0>\n" +
+                    "         <ser:arg1>DEmic</ser:arg1>\n" +
+                    "      </ser:addPerson1></SOAP-ENV:Body></SOAP-ENV:Envelope>";
 }

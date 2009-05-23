@@ -45,14 +45,40 @@
                                 <delete-message-property key="MULE_ENDPOINT"/>
                                 <delete-message-property key="MULE_ORIGINATING_ENDPOINT"/>
                                 <delete-message-property key="MULE_REMOTE_SYNC"/>
-                                <delete-message-property key="MULE_SESSION"/>                                                                
+                                <delete-message-property key="MULE_SESSION"/>
                             </message-properties-transformer>
                             <saaj:document-to-soap-message-transformer/>
+
                         </transformers>
                     </vm:outbound-endpoint>
                 </pass-through-router>
             </outbound>
         </service>
+
+        <service name="saajProxyWithCustomNamespace">
+            <inbound>
+                <vm:inbound-endpoint path="namespace.in"/>
+            </inbound>
+            <outbound>
+                <pass-through-router>
+                    <vm:outbound-endpoint path="namespace.out">
+                        <transformers>
+                            <message-properties-transformer>
+                                <delete-message-property key="MULE_CORRELATION_ID"/>
+                                <delete-message-property key="MULE_ENCODING"/>
+                                <delete-message-property key="MULE_ENDPOINT"/>
+                                <delete-message-property key="MULE_ORIGINATING_ENDPOINT"/>
+                                <delete-message-property key="MULE_REMOTE_SYNC"/>
+                                <delete-message-property key="MULE_SESSION"/>
+                            </message-properties-transformer>
+                            <saaj:document-to-soap-message-transformer headerPrefix="demic" headerURI="http://demic.com"/>
+
+                        </transformers>
+                    </vm:outbound-endpoint>
+                </pass-through-router>
+            </outbound>
+        </service>
+
 
     </model>
 </mule>

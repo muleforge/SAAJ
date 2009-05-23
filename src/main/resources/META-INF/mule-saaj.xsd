@@ -22,7 +22,7 @@
         </xsd:annotation>
     </xsd:element>
 
-    <xsd:element name="document-to-soap-message-transformer" type="mule:abstractTransformerType"
+    <xsd:element name="document-to-soap-message-transformer" type="documentToSoapMessageTransformerType"
                  substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
             <xsd:documentation>
@@ -31,6 +31,25 @@
         </xsd:annotation>
     </xsd:element>
 
-
+    <xsd:complexType name="documentToSoapMessageTransformerType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractTransformerType">
+                <xsd:attribute name="headerURI" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The size of the buffer (in bytes) used when sending data, set on the socket itself.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="headerPrefix" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The size of the buffer (in bytes) used when sending data, set on the socket itself.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
 
 </xsd:schema>
