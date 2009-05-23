@@ -12,6 +12,8 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 
 /**
  * <code>SOAPBodyToDocumentTransformer</code> Transform the payload of a <code>SOAPBody</code>,
@@ -31,7 +33,18 @@ public class SOAPBodyToDocumentTransformer extends AbstractTransformer {
     }
 
     protected Object doTransform(Object o, String s) throws TransformerException {
-        SOAPMessage soapMessage = (SOAPMessage) o;
+        InputStream inputStream;
+
+        if (o instanceof byte[]) {
+            byte[] in = (byte[]) o;
+            inputStream = new ByteArrayInputStream(in);
+        } else if (o instanceof InputStream) {
+            inputStream = (InputStream) o;
+        } else {
+            throw new MuleRuntimeException(SaajMessages.failedToExtractSoapBody());
+        }
+
+        SOAPMessage soapMessage = SaajUtils.buildSOAPMessage(inputStream);
         Document result = builder.newDocument();
         Node soapBody;
         try {

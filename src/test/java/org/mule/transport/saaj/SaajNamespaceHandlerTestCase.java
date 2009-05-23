@@ -22,11 +22,7 @@ public class SaajNamespaceHandlerTestCase extends FunctionalTestCase
     }
 
     public void testSaajConfig() throws Exception
-    {
-        SaajConnector c = (SaajConnector) muleContext.getRegistry().lookupConnector("saajConnector");
-        assertNotNull(c);
-        assertTrue(c.isConnected());
-        assertTrue(c.isStarted());
+    {       
         //TODO Assert specific properties are configured correctly
     }
 }

@@ -7,6 +7,8 @@ import org.w3c.dom.Node;
 import javax.xml.soap.*;
 import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -61,6 +63,18 @@ public class SaajUtils {
         return soapMessage;
     }
 
+    public static byte[] getSOAPMessageAsBytes(SOAPMessage message) {
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        try {
+            message.writeTo(byteStream);
+        } catch (SOAPException ex) {
+            throw new MuleRuntimeException(SaajMessages.failedToBuildSOAPMessage(), ex);
+        } catch (IOException ex) {
+            throw new MuleRuntimeException(SaajMessages.failedToBuildSOAPMessage(), ex);
+        }
+        return byteStream.toByteArray();
+    }
+    
     /**
      * Extract the first <code>Node</code> contaning the payload of a <code>SOAPBody</code>/
      *

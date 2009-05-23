@@ -11,7 +11,6 @@ import org.w3c.dom.Document;
 import org.custommonkey.xmlunit.XMLUnit;
 
 import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.soap.SOAPMessage;
 import java.io.*;
 
 public class DocumentToSOAPMessageTransformerTestCase extends AbstractTransformerTestCase {
@@ -61,44 +60,25 @@ public class DocumentToSOAPMessageTransformerTestCase extends AbstractTransforme
 
     public Object getResultData() {
         try {
-            return SaajUtils.buildSOAPMessage(new FileInputStream(new File(SOAP_GET_PEOPLE_REQUEST)));
+            return SaajUtils.getSOAPMessageAsBytes(
+                    SaajUtils.buildSOAPMessage(new FileInputStream(new File(SOAP_GET_PEOPLE_REQUEST))));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     public boolean compareResults(Object expected, Object result) {
+        String xml1;
+        String xml2;
 
-        if (expected instanceof SOAPMessage && result instanceof SOAPMessage) {
-            SOAPMessage s1 = (SOAPMessage) expected;
-            SOAPMessage s2 = (SOAPMessage) result;
+        try {
+            Transformer transformer = new XmlPrettyPrinter();
+            xml1 = (String) transformer.transform(normalizeString(new String((byte[]) expected)));
+            xml2 = (String) transformer.transform(normalizeString(new String((byte[]) result)));
+            return XMLUnit.compareXML(xml1, xml2).similar();
+        } catch (Exception ex) {
+            return false;
 
-            try {
-                ByteArrayOutputStream out1 = new ByteArrayOutputStream();
-                s1.writeTo(out1);
-                ByteArrayOutputStream out2 = new ByteArrayOutputStream();
-                s2.writeTo(out2);
-
-                Transformer transformer = new XmlPrettyPrinter();
-                String xml1 = (String) transformer.transform(normalizeString(out1.toString()));
-                String xml2 = (String) transformer.transform(normalizeString(out2.toString()));
-
-                return XMLUnit.compareXML(xml1, xml2).similar();
-            } catch (Exception ex) {
-                return false;
-            }
-        } else if (expected instanceof Document && result instanceof Document) {
-            return XMLUnit.compareXML((Document) expected, (Document) result).similar();
-        } else if (expected instanceof String && result instanceof String) {
-            try {
-                String expectedString = this.normalizeString((String) expected);
-                String resultString = this.normalizeString((String) result);
-                return XMLUnit.compareXML(expectedString, resultString).similar();
-            }
-            catch (Exception ex) {
-                return false;
-            }
         }
-        return super.compareResults(expected, result);
     }
 }

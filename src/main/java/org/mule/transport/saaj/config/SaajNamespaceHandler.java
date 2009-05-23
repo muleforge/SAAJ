@@ -25,14 +25,11 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
  */
 public class SaajNamespaceHandler extends AbstractMuleNamespaceHandler {
     public void init() {
-        registerMetaTransportEndpoints("saaj");
-        registerBeanDefinitionParser("connector", new OrphanDefinitionParser(SaajConnector.class, true));
         registerBeanDefinitionParser("soapbody-to-document-transformer",
                 new TransformerDefinitionParser(SOAPBodyToDocumentTransformer.class));
         registerBeanDefinitionParser("document-to-soap-message-transformer",
                 new TransformerDefinitionParser(DocumentToSOAPMessageTransformer.class));
-        registerBeanDefinitionParser("mime-header-transformer",
-                new TransformerDefinitionParser(MIMEHeaderTransformer.class));
+        
 
     }
 }

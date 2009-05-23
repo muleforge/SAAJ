@@ -2,7 +2,6 @@ package org.mule.transport.saaj;
 
 import org.apache.commons.io.FileUtils;
 import org.mule.api.MuleMessage;
-import org.mule.api.transport.DispatchException;
 import org.mule.api.transformer.Transformer;
 import org.mule.module.client.MuleClient;
 import org.mule.tck.FunctionalTestCase;
@@ -37,33 +36,30 @@ public class SaajMessageDispatcherFunctionalTestCase extends FunctionalTestCase 
         String getPeopleResponse = FileUtils.readFileToString(new File(XML_GET_PEOPLE_RESPONSE));
         MuleClient client = new MuleClient(muleContext);
         Object message = documentToSoapMessage.transform(xmlToDom.transform(GET_PEOPLE_SOAP_REQUEST));
-        MuleMessage result = client.send("saaj://localhost:9756/people", message, null);
+        MuleMessage result = client.send("http://localhost:9756/people", message, null);
         assertNotNull(result);
         assertEquals(getPeopleResponse,
                 uglyXmlToPrettyXml.transform(domToXml.transform(soapMessageToDocument.transform(result.getPayload()))));
     }
 
-    public void testAddPersonWithFault() throws Exception {
-        MuleClient client = new MuleClient(muleContext);
-        String exceptionMessage = null;
-
-        try {
-            client.send("saaj://localhost:9756/people",
-                    documentToSoapMessage.transform(xmlToDom.transform(FAULTY_ADD_PERSON_SOAP_REQUEST)),
-                    null);
-        } catch (DispatchException ex) {
-            exceptionMessage = ex.getCause().getMessage();
-        }
-        assertNotNull(exceptionMessage);
-        assertEquals(ADD_PERSON_FAULT_MESSAGE, exceptionMessage);
-    }
-
     public void testSynchronousAddPerson() throws Exception {
         Map properties = new HashMap();
-        properties.put("SOAP_HEADER","test123");
         MuleClient client = new MuleClient(muleContext);
         MuleMessage response =
-                client.send("saaj://localhost:9756/people",
+                client.send("http://localhost:9756/people",
+                        documentToSoapMessage.transform(xmlToDom.transform(ADD_PERSON_SOAP_REQUEST)), properties);
+        assertNotNull(response);
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void testSynchronousAddPersonWithMessageProperties() throws Exception {
+        Map properties = new HashMap();
+        properties.put("header1","a header");
+        properties.put("header2","another header");
+
+        MuleClient client = new MuleClient(muleContext);
+        MuleMessage response =
+                client.send("http://localhost:9756/people",
                         documentToSoapMessage.transform(xmlToDom.transform(ADD_PERSON_SOAP_REQUEST)), properties);
         assertNotNull(response);
     }
@@ -76,21 +72,4 @@ public class SaajMessageDispatcherFunctionalTestCase extends FunctionalTestCase 
                     "         <ser:arg1>DEmic</ser:arg1>\n" +
                     "      </ser:addPerson1>";
 
-
-    private static String FAULTY_ADD_PERSON_SOAP_REQUEST = " <addPerson>\n" +
-            "         <arg0>\n" +
-            "            <address>\n" +
-            "               <address></address>\n" +
-            "               <postcode></postcode>\n" +
-            "            </address>\n" +
-            "            <firstName>Ross</firstName>\n" +
-            "            <lastName></lastName>\n" +
-            "         </arg0>\n" +
-            "      </addPerson>";
-
-    private static String ADD_PERSON_FAULT_MESSAGE = "SOAPFault encountered.\n" +
-            " \tfault code   : [soap:Server]\n" +
-            " \tfault string : [null person, first name or last name]\n" +
-            " \tfault actor  : [null]\n" +
-            " \tfault details: [none]";
 }

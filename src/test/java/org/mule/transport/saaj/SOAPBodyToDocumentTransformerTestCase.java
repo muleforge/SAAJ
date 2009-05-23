@@ -42,7 +42,8 @@ public class SOAPBodyToDocumentTransformerTestCase extends AbstractTransformerTe
 
     public Object getTestData() {
         try {
-            return SaajUtils.buildSOAPMessage(new FileInputStream(new File(SOAP_GET_PEOPLE_RESPONSE)));
+            return SaajUtils.getSOAPMessageAsBytes(
+                    SaajUtils.buildSOAPMessage(new FileInputStream(new File(SOAP_GET_PEOPLE_RESPONSE))));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

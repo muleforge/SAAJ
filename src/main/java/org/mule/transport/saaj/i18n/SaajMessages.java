@@ -49,4 +49,8 @@ public class SaajMessages extends MessageFactory {
     public static Message failedToAddMIMEHeader() {
         return factory.createMessage(BUNDLE_PATH, 8);
     }
+
+     public static Message failedToGetSOAPMessageAsByteArray() {
+        return factory.createMessage(BUNDLE_PATH, 9);
+    }
 }
