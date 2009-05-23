@@ -14,7 +14,7 @@ import org.mule.config.spring.handlers.AbstractMuleNamespaceHandler;
 import org.mule.transport.saaj.*;
 
 /**
- * Registers a Bean Definition Parser for handling <code><saaj:connector></code> elements.
+ * Registers a Bean Definition Parser for handling the SAAJ transformers.
  */
 public class SaajNamespaceHandler extends AbstractMuleNamespaceHandler {
     public void init() {

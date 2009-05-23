@@ -10,7 +10,7 @@ import javax.xml.soap.*;
 import java.util.Iterator;
 
 /**
- * <code>DocumentToSOAPMessageTransformer</code> Transform a org.w3c.dom.Document to a <code>SOAPMessage</code>.
+ * <code>DocumentToSOAPMessageTransformer</code> transforms a org.w3c.dom.Document to a SOAP message encoded as a byte array.
  */
 public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransformer {
 
@@ -34,10 +34,15 @@ public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransf
     }
 
 
-    void populateHeaders(SOAPMessage soapMmessage, MuleMessage muleMessage) {
+    /**
+     * Propagates message properties from the <code>MuleMessage</code> to the <code>SOAPMessage</code> as SOAP headers
+     * @param soapMessage the SOAP message
+     * @param muleMessage the Mule message
+     */
+    void populateHeaders(SOAPMessage soapMessage, MuleMessage muleMessage) {
         try {
-            if (soapMmessage.getSOAPHeader() != null) {
-                Iterator elements = soapMmessage.getSOAPHeader().getChildElements();
+            if (soapMessage.getSOAPHeader() != null) {
+                Iterator elements = soapMessage.getSOAPHeader().getChildElements();
                 while (elements.hasNext()) {
                     SOAPHeaderElement header = (SOAPHeaderElement) elements.next();
                     String headerName = header.getLocalName();

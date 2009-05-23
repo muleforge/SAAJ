@@ -41,6 +41,12 @@ public class SaajUtils {
         return soapMessage;
     }
 
+    /**
+     * Build a <code>SOAPMessage</code> from an <code>InputStream</code>.
+     * @param input the <code>InputStream</code> to build the message from
+     * @param headers A <code>Map</code> used to populate the SOAP headers of the <code>SOAPMessage</code>
+     * @return the constructed <code>SOAPMessage</code>
+     */
     public static SOAPMessage buildSOAPMessage(InputStream input, Map<String, String> headers) {
         SOAPMessage soapMessage;
         try {
@@ -63,6 +69,11 @@ public class SaajUtils {
         return soapMessage;
     }
 
+    /**
+     * Serializes a <code>SOAPMessage</code> as XML encoded as a byte array
+     * @param message the <code>SOAPMessage</code> to encode as bytes
+     * @return the encoded <code>SOAPMessage</code>
+     */
     public static byte[] getSOAPMessageAsBytes(SOAPMessage message) {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         try {
@@ -92,7 +103,6 @@ public class SaajUtils {
                 break;
             }
         }
-
         return firstNode;
     }
 }
