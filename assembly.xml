@@ -38,7 +38,7 @@
         <!-- Mule libraries -->
         <dependencySet>
             <outputDirectory>lib/user</outputDirectory>
-            <outputFileNameMapping>mule-transport-saaj.${extension}</outputFileNameMapping>
+            <outputFileNameMapping>mule-module-saaj.${extension}</outputFileNameMapping>
             <scope>test</scope>
             <includes>
                 <include>org.mule.tests:mule-tests-functional</include>

@@ -9,7 +9,6 @@ import org.custommonkey.xmlunit.XMLUnit;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 public class ReceptionFunctionalTestCase extends FunctionalTestCase {
 
@@ -61,12 +60,14 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
         }
     }
 
+    // ToDo Externalize this to a file
     private static String ADD_PERSON_REQUEST =
             " <ser:addPerson1  xmlns:ser=\"http://services.testmodels.tck.mule.org/\">\n" +
                     "         <ser:arg0>John</ser:arg0>\n" +
                     "         <ser:arg1>DEmic</ser:arg1>\n" +
                     "      </ser:addPerson1>";
 
+    // ToDo Externalize this to a file
     private static String ADD_PERSON_SOAP_REQUEST =
            "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
                    "<SOAP-ENV:Header>" +
