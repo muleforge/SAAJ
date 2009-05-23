@@ -71,8 +71,8 @@
                                 <delete-message-property key="MULE_REMOTE_SYNC"/>
                                 <delete-message-property key="MULE_SESSION"/>
                             </message-properties-transformer>
-                            <saaj:document-to-soap-message-transformer headerPrefix="demic" headerURI="http://demic.com"/>
-
+                            <saaj:document-to-soap-message-transformer headerPrefix="demic"
+                                                                       headerURI="http://demic.com"/>
                         </transformers>
                     </vm:outbound-endpoint>
                 </pass-through-router>

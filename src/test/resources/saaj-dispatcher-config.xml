@@ -19,6 +19,7 @@
        "
         >
 
+    <vm:connector name="vmConnector" queueEvents="true"/>
     <xm:xml-to-dom-transformer name="xmlToDom" returnClass="org.w3c.dom.Document"/>
     <xm:dom-to-xml-transformer name="domToXml" returnClass="java.lang.String"/>
     <xm:xml-prettyprinter-transformer name="uglyXmlToPrettyXml" returnClass="java.lang.String"/>
@@ -36,6 +37,19 @@
                                       />
             </inbound>
             <test:web-service-component/>
+        </service>
+
+        <service name="inboundService">
+            <inbound>
+                <vm:inbound-endpoint path="in">
+                    <saaj:soap-message-to-document-transformer/>
+                </vm:inbound-endpoint>
+            </inbound>
+            <outbound>
+                <pass-through-router>
+                    <vm:outbound-endpoint path="out"/>
+                </pass-through-router>
+            </outbound>
         </service>
     </model>
 
