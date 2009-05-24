@@ -9,7 +9,8 @@ import org.w3c.dom.Document;
 import javax.xml.soap.*;
 
 /**
- * <code>DocumentToSOAPMessageTransformer</code> transforms a org.w3c.dom.Document to a SOAP message encoded as a byte array.
+ * <code>DocumentToSOAPMessageTransformer</code> transforms a org.w3c.dom.Document to a SOAP message using
+ * SAAJ. The transformed result is serialized as a byte array.
  */
 public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransformer {
 
