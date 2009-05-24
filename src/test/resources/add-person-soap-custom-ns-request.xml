@@ -1,0 +1,12 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header>
+        <demic:header1 xmlns:demic="http://demic.com">a header</demic:header1>
+        <demic:header2 xmlns:demic="http://demic.com">another header</demic:header2>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body>
+        <ser:addPerson1 xmlns:ser="http://services.testmodels.tck.mule.org">
+            <ser:arg0>John</ser:arg0>
+            <ser:arg1>DEmic</ser:arg1>
+        </ser:addPerson1>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

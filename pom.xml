@@ -33,7 +33,7 @@
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
             </plugin>
-        </plugins>
+        </plugins>                      
     </build>
 
     <!-- plugins for creating site reports -->

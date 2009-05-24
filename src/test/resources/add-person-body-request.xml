@@ -1,0 +1,4 @@
+<ser:addPerson1 xmlns:ser="http://services.testmodels.tck.mule.org">
+    <ser:arg0>John</ser:arg0>
+    <ser:arg1>DEmic</ser:arg1>
+</ser:addPerson1>

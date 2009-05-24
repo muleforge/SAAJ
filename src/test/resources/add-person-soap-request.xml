@@ -1,0 +1,13 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header>
+        <mule-saaj:header1 xmlns:mule-saaj="http://www.mulesource.org/schema/mule/saaj/2.2">a header</mule-saaj:header1>
+        <mule-saaj:header2 xmlns:mule-saaj="http://www.mulesource.org/schema/mule/saaj/2.2">another header
+        </mule-saaj:header2>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body>
+        <ser:addPerson1 xmlns:ser="http://services.testmodels.tck.mule.org">
+            <ser:arg0>John</ser:arg0>
+            <ser:arg1>DEmic</ser:arg1>
+        </ser:addPerson1>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
