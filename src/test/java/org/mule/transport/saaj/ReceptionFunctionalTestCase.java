@@ -13,11 +13,6 @@ import java.util.Map;
 public class ReceptionFunctionalTestCase extends FunctionalTestCase {
 
     Transformer xmlToDom;
-    Transformer domToXml;
-    Transformer uglyXmlToPrettyXml;
-    Transformer soapMessageToDocument;
-    Transformer documentToSoapMessage;
-
 
     protected String getConfigResources() {
         return "src/test/resources/saaj-receiver-config.xml";
@@ -25,14 +20,10 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
 
     protected void doSetUp() throws Exception {
         xmlToDom = muleContext.getRegistry().lookupTransformer("xmlToDom");
-        domToXml = muleContext.getRegistry().lookupTransformer("domToXml");
-        uglyXmlToPrettyXml = muleContext.getRegistry().lookupTransformer("uglyXmlToPrettyXml");
-        soapMessageToDocument = muleContext.getRegistry().lookupTransformer("soapBodyToDocument");
-        documentToSoapMessage = muleContext.getRegistry().lookupTransformer("documentToSoapMessage");
-
         super.doSetUp();
     }
 
+    @SuppressWarnings({"unchecked"})
     public void testMessageDispatched() throws Exception {
 
         MuleClient client = new MuleClient(muleContext);
@@ -45,6 +36,7 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
         assertTrue(compareXML(ADD_PERSON_SOAP_REQUEST, result.getPayloadAsString()));
     }
 
+    @SuppressWarnings({"unchecked"})
     public void testMessageDispatchedWithCustomNamespace() throws Exception {
 
         MuleClient client = new MuleClient(muleContext);
@@ -55,6 +47,15 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
         MuleMessage result = client.request("vm://namespace.out", 15000);
         assertNotNull(result);
         assertTrue(compareXML(ADD_PERSON_SOAP_REQUEST_WITH_CUSTOM_NS, result.getPayloadAsString()));
+    }
+
+     public void testMessageTransformed() throws Exception {
+        MuleClient client = new MuleClient(muleContext);
+        client.send("vm://soap.in", ADD_PERSON_SOAP_REQUEST_WITH_CUSTOM_NS.getBytes(), null);
+        MuleMessage result = client.request("vm://soap.out", 15000);
+        assertNotNull(result);
+        assertEquals("a header", result.getProperty("header1"));
+        assertEquals("another header", result.getProperty("header2"));
     }
 
     boolean compareXML(String s1, String s2) {

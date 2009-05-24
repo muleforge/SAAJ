@@ -79,6 +79,18 @@
             </outbound>
         </service>
 
+          <service name="soapInboundService">
+            <inbound>
+                <vm:inbound-endpoint path="soap.in">
+                    <saaj:soap-message-to-document-transformer/>
+                </vm:inbound-endpoint>
+            </inbound>
+            <outbound>
+                <pass-through-router>
+                    <vm:outbound-endpoint path="soap.out"/>
+                </pass-through-router>
+            </outbound>
+        </service>
 
     </model>
 </mule>
