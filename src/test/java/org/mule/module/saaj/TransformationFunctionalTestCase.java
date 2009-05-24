@@ -1,4 +1,4 @@
-package org.mule.transport.saaj;
+package org.mule.module.saaj;
 
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.Transformer;

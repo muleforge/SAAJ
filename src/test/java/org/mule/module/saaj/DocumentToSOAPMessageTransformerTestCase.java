@@ -1,4 +1,4 @@
-package org.mule.transport.saaj;
+package org.mule.module.saaj;
 
 import org.mule.transformer.AbstractTransformerTestCase;
 import org.mule.api.transformer.Transformer;

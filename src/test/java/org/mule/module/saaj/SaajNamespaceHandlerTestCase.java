@@ -7,7 +7,7 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package org.mule.transport.saaj;
+package org.mule.module.saaj;
 
 import org.mule.tck.FunctionalTestCase;
 

@@ -7,11 +7,11 @@
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
-package org.mule.transport.saaj.config;
+package org.mule.module.saaj.config;
 
 import org.mule.config.spring.parsers.specific.TransformerDefinitionParser;
 import org.mule.config.spring.handlers.AbstractMuleNamespaceHandler;
-import org.mule.transport.saaj.*;
+import org.mule.module.saaj.*;
 
 /**
  * Registers a Bean Definition Parser for handling the SAAJ transformers.

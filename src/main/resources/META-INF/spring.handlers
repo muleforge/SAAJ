@@ -1,1 +1,1 @@
-http\://www.mulesource.org/schema/mule/saaj/2.2=org.mule.transport.saaj.config.SaajNamespaceHandler
+http\://www.mulesource.org/schema/mule/saaj/2.2=org.mule.module.saaj.config.SaajNamespaceHandler

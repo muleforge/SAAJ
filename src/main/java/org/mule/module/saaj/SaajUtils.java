@@ -1,7 +1,7 @@
-package org.mule.transport.saaj;
+package org.mule.module.saaj;
 
 import org.mule.api.MuleRuntimeException;
-import org.mule.transport.saaj.i18n.SaajMessages;
+import org.mule.module.saaj.i18n.SaajMessages;
 import org.w3c.dom.Node;
 
 import javax.xml.soap.*;

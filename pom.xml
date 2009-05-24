@@ -32,7 +32,7 @@
                     </descriptors>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
-            </plugin>
+            </plugin>                                                                                                                       
         </plugins>                      
     </build>
 

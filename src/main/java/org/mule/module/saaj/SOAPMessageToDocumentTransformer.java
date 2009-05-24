@@ -1,10 +1,10 @@
-package org.mule.transport.saaj;
+package org.mule.module.saaj;
 
 import org.mule.transformer.AbstractMessageAwareTransformer;
 import org.mule.api.transformer.TransformerException;
 import org.mule.api.MuleRuntimeException;
 import org.mule.api.MuleMessage;
-import org.mule.transport.saaj.i18n.SaajMessages;
+import org.mule.module.saaj.i18n.SaajMessages;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
