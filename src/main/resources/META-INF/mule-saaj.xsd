@@ -37,14 +37,14 @@
                 <xsd:attribute name="headerURI" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The size of the buffer (in bytes) used when sending data, set on the socket itself.
+                            The namespace URI to use when propagating message properties to SOAP headers.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="headerPrefix" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The size of the buffer (in bytes) used when sending data, set on the socket itself.
+                            The namespace prefix to use when propagating message properties to SOAP headers.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
