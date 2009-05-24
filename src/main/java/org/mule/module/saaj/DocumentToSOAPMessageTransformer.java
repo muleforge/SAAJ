@@ -14,6 +14,7 @@ import javax.xml.soap.*;
  */
 public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransformer {
 
+    private boolean propagateHeaders = true;
     private String headerURI = "http://www.mulesource.org/schema/mule/saaj/2.2";
     private String headerPrefix = "mule-saaj";
 
@@ -23,6 +24,10 @@ public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransf
     public DocumentToSOAPMessageTransformer() throws Exception {
         soapFactory = SOAPFactory.newInstance();
         messageFactory = MessageFactory.newInstance();
+    }
+
+    public void setPropagateHeaders(boolean propagateHeaders) {
+        this.propagateHeaders = propagateHeaders;
     }
 
     public void setHeaderURI(String headerURI) {
@@ -42,7 +47,9 @@ public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransf
             soapMessage = messageFactory.createMessage();
             SOAPBody body = soapMessage.getSOAPBody();
             body.addDocument(document);
-            populateHeaders(muleMessage, soapMessage);
+            if (propagateHeaders) {
+                propagateHeaders(muleMessage, soapMessage);
+            }
             soapMessage.saveChanges();
         } catch (SOAPException ex) {
             throw new TransformerException(SaajMessages.failedToBuildSOAPMessage());
@@ -51,7 +58,7 @@ public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransf
         return SaajUtils.getSOAPMessageAsBytes(soapMessage);
     }
 
-    void populateHeaders(MuleMessage muleMessage, SOAPMessage soapMessage) throws SOAPException {
+    void propagateHeaders(MuleMessage muleMessage, SOAPMessage soapMessage) throws SOAPException {
         for (Object n : muleMessage.getPropertyNames()) {
             String propertyName = (String) n;
             SOAPHeader header = soapMessage.getSOAPHeader();

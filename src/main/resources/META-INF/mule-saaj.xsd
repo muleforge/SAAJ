@@ -34,6 +34,13 @@
     <xsd:complexType name="documentToSoapMessageTransformerType">
         <xsd:complexContent>
             <xsd:extension base="mule:abstractTransformerType">
+                 <xsd:attribute name="propagateHeaders" type="xsd:boolean">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Whether or not to propage message properties to SOAP headers.  True by default.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
                 <xsd:attribute name="headerURI" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>

@@ -15,6 +15,11 @@ public class SoapProxyFunctionalTestCase extends FunctionalTestCase {
 
         MuleMessage soapResponse = client.send("http://localhost:9756/soap", ADD_PERSON_SOAP_REQUEST, null);
         assertNotNull(soapResponse);
+        assertEquals(SOAP_RESPONSE, soapResponse.getPayloadAsString());
+        MuleMessage jmsResponse = client.request("jms://messages", 15000);
+        assertNotNull(jmsResponse);
+        assertEquals(ADD_PERSON_REQUEST, jmsResponse.getPayloadAsString());
+        assertEquals("HIGH", jmsResponse.getProperty("priority"));
 
     }
 
@@ -27,4 +32,11 @@ public class SoapProxyFunctionalTestCase extends FunctionalTestCase {
                     "         <ser:arg0>John</ser:arg0>\n" +
                     "         <ser:arg1>DEmic</ser:arg1>\n" +
                     "      </ser:addPerson1></SOAP-ENV:Body></SOAP-ENV:Envelope>";
+
+    private static String ADD_PERSON_REQUEST = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><ser:addPerson1 xmlns:ser=\"http://services.testmodels.tck.mule.org/\">\n" +
+            "         <ser:arg0>John</ser:arg0>\n" +
+            "         <ser:arg1>DEmic</ser:arg1>\n" +
+            "      </ser:addPerson1>";
+
+    private static String SOAP_RESPONSE = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header/><SOAP-ENV:Body><status>SUBMITTED</status></SOAP-ENV:Body></SOAP-ENV:Envelope>";
 }
