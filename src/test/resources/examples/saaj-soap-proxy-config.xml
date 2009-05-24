@@ -2,7 +2,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:context="http://www.springframework.org/schema/context"
-      xmlns:jms="http://www.mulesource.org/schema/mule/jms/2.2"
+      xmlns:vm="http://www.mulesource.org/schema/mule/vm/2.2"
       xmlns:http="http://www.mulesource.org/schema/mule/http/2.2"
       xmlns:script="http://www.mulesource.org/schema/mule/scripting/2.2"
       xmlns:xm="http://www.mulesource.org/schema/mule/xml/2.2"
@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
        http://www.mulesource.org/schema/mule/core/2.2 http://www.mulesource.org/schema/mule/core/2.2/mule.xsd
-       http://www.mulesource.org/schema/mule/jms/2.2 http://www.mulesource.org/schema/mule/jms/2.2/mule-jms.xsd
+       http://www.mulesource.org/schema/mule/vm/2.2 http://www.mulesource.org/schema/mule/vm/2.2/mule-vm.xsd
        http://www.mulesource.org/schema/mule/http/2.2 http://www.mulesource.org/schema/mule/http/2.2/mule-http.xsd
        http://www.mulesource.org/schema/mule/scripting/2.2 http://www.mulesource.org/schema/mule/scripting/2.2/mule-scripting.xsd
        http://www.mulesource.org/schema/mule/xml/2.2 http://www.mulesource.org/schema/mule/xml/2.2/mule-xml.xsd
@@ -19,8 +19,8 @@
        "
         >
 
-    <jms:activemq-connector name="jmsConnector" brokerURL="vm://localhost"/>
-
+    <vm:connector name="vmConnector" queueEvents="true"/>
+    
     <model name="saajReceiverModel">
 
         <service name="saajProxy">
@@ -31,13 +31,15 @@
                         <xm:dom-to-xml-transformer/>
                     </transformers>
                     <response-transformers>
-                                                
+                        <xm:xml-to-dom-transformer/>
+                        <saaj:document-to-soap-message-transformer/>
                     </response-transformers>
                 </http:inbound-endpoint>
             </inbound>
-
+            <script:component>
+                <script:script file="src/test/groovy/ForwardingComponent.groovy"/>
+            </script:component>
         </service>
     </model>
-
 
 </mule>
