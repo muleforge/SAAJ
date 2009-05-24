@@ -19,28 +19,23 @@
        "
         >
 
-    <vm:connector name="vmConnector" queueEvents="true"/>
     <xm:xml-to-dom-transformer name="xmlToDom" returnClass="org.w3c.dom.Document"/>
     <xm:dom-to-xml-transformer name="domToXml" returnClass="java.lang.String"/>
     <xm:xml-prettyprinter-transformer name="uglyXmlToPrettyXml" returnClass="java.lang.String"/>
-
-    <saaj:soap-message-to-document-transformer name="soapBodyToDocument"/>
     <saaj:document-to-soap-message-transformer name="documentToSoapMessage"/>
+    <saaj:soap-message-to-document-transformer name="soapMessageToDocument"/>
 
     <model name="saajDispatcherModel">
 
-        <service name="inboundService">
+        <service name="soapService">
             <inbound>
-                <vm:inbound-endpoint path="in">
-                    <saaj:soap-message-to-document-transformer/>
-                </vm:inbound-endpoint>
+                <cxf:inbound-endpoint address="http://localhost:9756/people"
+                                      frontend="simple"
+                                      serviceClass="org.mule.tck.testmodels.services.PeopleService"
+                        />
             </inbound>
-            <outbound>
-                <pass-through-router>
-                    <vm:outbound-endpoint path="out"/>
-                </pass-through-router>
-            </outbound>
-        </service>      
+            <test:web-service-component/>
+        </service>
     </model>
 
 </mule>
