@@ -10,7 +10,7 @@ import org.custommonkey.xmlunit.XMLUnit;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ReceptionFunctionalTestCase extends FunctionalTestCase {
+public class TransformationFunctionalTestCase extends FunctionalTestCase {
 
     Transformer xmlToDom;
 
@@ -24,7 +24,7 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
     }
 
     @SuppressWarnings({"unchecked"})
-    public void testMessageDispatched() throws Exception {
+    public void testMuleMessageTransformedToSOAPMessage() throws Exception {
 
         MuleClient client = new MuleClient(muleContext);
         Map properties = new HashMap();
@@ -37,7 +37,7 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
     }
 
     @SuppressWarnings({"unchecked"})
-    public void testMessageDispatchedWithCustomNamespace() throws Exception {
+    public void testMuleMessageTransformedToSOAPMessageWithCustomNamespace() throws Exception {
 
         MuleClient client = new MuleClient(muleContext);
         Map properties = new HashMap();
@@ -49,7 +49,7 @@ public class ReceptionFunctionalTestCase extends FunctionalTestCase {
         assertTrue(compareXML(ADD_PERSON_SOAP_REQUEST_WITH_CUSTOM_NS, result.getPayloadAsString()));
     }
 
-     public void testMessageTransformed() throws Exception {
+     public void testSOAPMessageTransformedToMuleMessageWithPopulatedHeaders() throws Exception {
         MuleClient client = new MuleClient(muleContext);
         client.send("vm://soap.in", ADD_PERSON_SOAP_REQUEST_WITH_CUSTOM_NS.getBytes(), null);
         MuleMessage result = client.request("vm://soap.out", 15000);
