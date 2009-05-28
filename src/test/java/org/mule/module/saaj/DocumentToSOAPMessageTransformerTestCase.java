@@ -11,6 +11,8 @@ import org.w3c.dom.Document;
 import org.custommonkey.xmlunit.XMLUnit;
 
 import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.SOAPException;
 import java.io.*;
 
 public class DocumentToSOAPMessageTransformerTestCase extends AbstractTransformerTestCase {
@@ -61,8 +63,10 @@ public class DocumentToSOAPMessageTransformerTestCase extends AbstractTransforme
     public Object getResultData() {
         try {
             return SaajUtils.getSOAPMessageAsBytes(
-                    SaajUtils.buildSOAPMessage(new FileInputStream(new File(SOAP_GET_PEOPLE_REQUEST))));
+                    SaajUtils.buildSOAPMessage(new FileInputStream(new File(SOAP_GET_PEOPLE_REQUEST)), MessageFactory.newInstance()));
         } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SOAPException e) {
             throw new RuntimeException(e);
         }
     }

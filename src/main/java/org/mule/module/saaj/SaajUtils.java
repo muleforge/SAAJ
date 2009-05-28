@@ -26,10 +26,9 @@ public class SaajUtils {
      * @param input the stream of XML to create the <code>SOAPMessage</code> from.
      * @return the <code>SOAPMessage</code>  constructed from the input
      */
-    public static SOAPMessage buildSOAPMessage(InputStream input) {
+    public static SOAPMessage buildSOAPMessage(InputStream input, MessageFactory messageFactory) {
         SOAPMessage soapMessage;
         try {
-            MessageFactory messageFactory = MessageFactory.newInstance();
             soapMessage = messageFactory.createMessage();
             SOAPPart soapPart = soapMessage.getSOAPPart();
             StreamSource preppedMsgSrc = new StreamSource(input);
@@ -47,10 +46,10 @@ public class SaajUtils {
      * @param headers A <code>Map</code> used to populate the SOAP headers of the <code>SOAPMessage</code>
      * @return the constructed <code>SOAPMessage</code>
      */
-    public static SOAPMessage buildSOAPMessage(InputStream input, Map<String, String> headers) {
+    public static SOAPMessage buildSOAPMessage(InputStream input, Map<String, String> headers,
+                                               MessageFactory messageFactory) {
         SOAPMessage soapMessage;
         try {
-            MessageFactory messageFactory = MessageFactory.newInstance();
             SOAPFactory soapFactory = SOAPFactory.newInstance();
             soapMessage = messageFactory.createMessage();
             SOAPPart soapPart = soapMessage.getSOAPPart();

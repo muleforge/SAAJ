@@ -22,6 +22,8 @@
         >
 
     <jms:activemq-connector name="jmsConnector" brokerURL="vm://localhost"/>
+    
+    <xm:xml-to-dom-transformer name="xmlToDom" returnClass="org.w3c.dom.Document"/>
 
     <model name="saajReceiverModel">
 

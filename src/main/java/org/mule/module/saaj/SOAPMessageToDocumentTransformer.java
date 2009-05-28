@@ -11,6 +11,7 @@ import org.w3c.dom.Node;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPHeaderElement;
+import javax.xml.soap.MessageFactory;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
@@ -26,11 +27,13 @@ import java.util.Iterator;
 public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransformer {
 
     DocumentBuilder builder;
+    MessageFactory messageFactory;
 
-    public SOAPMessageToDocumentTransformer() {
+    public SOAPMessageToDocumentTransformer() throws SOAPException {
         super();
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            messageFactory = MessageFactory.newInstance();            
         } catch (ParserConfigurationException e) {
             throw new MuleRuntimeException(SaajMessages.failedToCreateDocumentBuilder(), e);
         }
@@ -49,7 +52,7 @@ public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransf
             throw new MuleRuntimeException(SaajMessages.failedToExtractSoapBody());
         }
 
-        SOAPMessage soapMessage = SaajUtils.buildSOAPMessage(inputStream);
+        SOAPMessage soapMessage = SaajUtils.buildSOAPMessage(inputStream, messageFactory);
         Document result = builder.newDocument();
         Node soapBody;
         try {

@@ -10,6 +10,8 @@ import org.w3c.dom.Document;
 import org.custommonkey.xmlunit.XMLUnit;
 
 import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.SOAPException;
 import java.io.FileInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,8 +45,10 @@ public class SOAPBodyToDocumentTransformerTestCase extends AbstractTransformerTe
     public Object getTestData() {
         try {
             return SaajUtils.getSOAPMessageAsBytes(
-                    SaajUtils.buildSOAPMessage(new FileInputStream(new File(SOAP_GET_PEOPLE_RESPONSE))));
+                    SaajUtils.buildSOAPMessage(new FileInputStream(new File(SOAP_GET_PEOPLE_RESPONSE)), MessageFactory.newInstance()));
         } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SOAPException e) {
             throw new RuntimeException(e);
         }
     }

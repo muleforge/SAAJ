@@ -2,9 +2,33 @@ package org.mule.module.saaj.example;
 
 import org.mule.tck.FunctionalTestCase;
 import org.mule.module.client.MuleClient;
+import org.mule.module.xml.util.XMLUtils;
 import org.mule.api.MuleMessage;
+import org.mule.api.transformer.Transformer;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.w3c.dom.Document;
+
+import javax.xml.transform.TransformerFactoryConfigurationError;
 
 public class SoapProxyFunctionalTestCase extends FunctionalTestCase {
+
+    Transformer xmlToDom;
+
+    public SoapProxyFunctionalTestCase() {
+        super();
+        XMLUnit.setIgnoreWhitespace(true);
+        XMLUnit.setXSLTVersion("2.0");
+        try {
+            XMLUnit.getTransformerFactory();
+        }
+        catch (TransformerFactoryConfigurationError e) {
+            XMLUnit.setTransformerFactory(XMLUtils.TRANSFORMER_FACTORY_JDK5);
+        }
+    }
+
+    protected void doSetUp() {
+        xmlToDom = muleContext.getRegistry().lookupTransformer("xmlToDom");
+    }
 
     protected String getConfigResources() {
         return "src/test/resources/examples/saaj-soap-proxy-config.xml";
@@ -18,10 +42,13 @@ public class SoapProxyFunctionalTestCase extends FunctionalTestCase {
         assertEquals(SOAP_RESPONSE, soapResponse.getPayloadAsString());
         MuleMessage jmsResponse = client.request("jms://messages", 15000);
         assertNotNull(jmsResponse);
-        assertEquals(ADD_PERSON_REQUEST, jmsResponse.getPayloadAsString());
-        assertEquals("HIGH", jmsResponse.getProperty("priority"));
 
+        assertTrue(XMLUnit.compareXML((Document) xmlToDom.transform(ADD_PERSON_REQUEST),
+                (Document) xmlToDom.transform(jmsResponse.getPayloadAsString())).similar());
+
+        assertEquals("HIGH", jmsResponse.getProperty("priority"));
     }
+
 
     private static String ADD_PERSON_SOAP_REQUEST =
             "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
