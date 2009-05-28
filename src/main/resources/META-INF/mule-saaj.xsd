@@ -13,7 +13,7 @@
     <xsd:import namespace="http://www.mulesource.org/schema/mule/core/2.2"
                 schemaLocation="http://www.mulesource.org/schema/mule/core/2.2/mule.xsd"/>
 
-    <xsd:element name="soap-message-to-document-transformer" type="mule:abstractTransformerType"
+    <xsd:element name="soap-message-to-document-transformer" type="soapMessageToDocumentTransformerType"
                  substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
             <xsd:documentation>
@@ -34,10 +34,10 @@
     <xsd:complexType name="documentToSoapMessageTransformerType">
         <xsd:complexContent>
             <xsd:extension base="mule:abstractTransformerType">
-                 <xsd:attribute name="propagateHeaders" type="xsd:boolean">
+                <xsd:attribute name="propagateHeaders" type="xsd:boolean">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Whether or not to propage message properties to SOAP headers.  True by default.
+                            Whether or not to propage message properties to SOAP headers. True by default.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -55,8 +55,28 @@
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
+                <xsd:attribute name="throwExceptionOnFault" type="xsd:boolean">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Whether or not to throw an exception when a SOAP fault is encountered. False by default.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
 
+     <xsd:complexType name="soapMessageToDocumentTransformerType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractTransformerType">
+                <xsd:attribute name="throwExceptionOnFault" type="xsd:boolean">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Whether or not to throw an exception when a SOAP fault is encountered. False by default.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
 </xsd:schema>

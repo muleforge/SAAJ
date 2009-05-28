@@ -104,5 +104,20 @@ public class SaajUtils {
         }
         return firstNode;
     }
+
+    /**
+     * Determine if a SOAP fault is present in a <code>SOAPMessage</code>'s body
+     * @param soapMessage the <code>SOAPMessage</code> to evaluate
+     * @return true if the message contains a fault, false if not
+     */
+    public static boolean containsFault(SOAPMessage soapMessage) {
+        boolean result;
+        try {
+            result = soapMessage.getSOAPBody().getFault() != null;
+        } catch (SOAPException ex) {
+            throw new MuleRuntimeException(SaajMessages.failedToEvaluateFault(), ex);              
+        }
+        return result;
+    }
 }
 

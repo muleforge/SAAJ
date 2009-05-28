@@ -53,4 +53,8 @@ public class SaajMessages extends MessageFactory {
      public static Message failedToGetSOAPMessageAsByteArray() {
         return factory.createMessage(BUNDLE_PATH, 9);
     }
+
+    public static Message failedToEvaluateFault() {
+        return factory.createMessage(BUNDLE_PATH, 10);
+    }
 }

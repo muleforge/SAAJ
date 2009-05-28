@@ -49,7 +49,6 @@ public class SoapProxyFunctionalTestCase extends FunctionalTestCase {
         assertEquals("HIGH", jmsResponse.getProperty("priority"));
     }
 
-
     private static String ADD_PERSON_SOAP_REQUEST =
             "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
                     "<SOAP-ENV:Header>" +
