@@ -117,14 +117,14 @@ public class TransformationFunctionalTestCase extends FunctionalTestCase {
     private static String SOAP_FAULT = "<SOAP-ENV:Envelope \n" +
             "xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' \n" +
             "SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' \n" +
-            "xmlns:v='http://www.eggheadcafe.com/webservices/'>; \n" +
+            "xmlns:v='http://www.foosource.com/webservices/'>; \n" +
             "<SOAP-ENV:Body> \n" +
             "<SOAP-ENV:Fault> \n" +
-            "<faultcode>SOAP-ENV:Client.AppError</faultcode> \n" +
+            "<faultcode>SOAP-ENV:ApplicationError</faultcode> \n" +
             "<faultstring>Application Error</faultstring> \n" +
             "<detail> \n" +
-            "<message>You dummy!</message> \n" +
-            "<errorcode>1006</errorcode> \n" +
+            "<message>There was an error</message> \n" +
+            "<errorcode>303FTW</errorcode> \n" +
             "</detail> \n" +
             "</SOAP-ENV:Fault> \n" +
             "</SOAP-ENV:Body> \n" +
