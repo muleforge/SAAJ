@@ -79,7 +79,7 @@
             </outbound>
         </service>
 
-          <service name="soapInboundService">
+        <service name="soapInboundService">
             <inbound>
                 <vm:inbound-endpoint path="soap.in">
                     <saaj:soap-message-to-document-transformer/>
@@ -92,5 +92,33 @@
             </outbound>
         </service>
 
+        <service name="soapNoFaultInboundService">
+            <inbound>
+                <vm:inbound-endpoint path="soap.no-fault.in">
+                    <saaj:soap-message-to-document-transformer throwExceptionOnFault="true"/>
+                </vm:inbound-endpoint>
+            </inbound>
+            <outbound>
+                <pass-through-router>
+                    <vm:outbound-endpoint path="soap.no-fault.out"/>
+                </pass-through-router>
+            </outbound>
+        </service>
+
+        <service name="soapWithFaultInboundService">
+            <inbound>
+                <vm:inbound-endpoint path="soap.fault.in">
+                    <saaj:soap-message-to-document-transformer throwExceptionOnFault="true"/>
+                </vm:inbound-endpoint>
+            </inbound>
+            <outbound>
+                <pass-through-router>
+                    <vm:outbound-endpoint path="soap.out"/>
+                </pass-through-router>
+            </outbound>
+            <default-service-exception-strategy>
+                <vm:outbound-endpoint path="soap.fault"/>
+            </default-service-exception-strategy>
+        </service>
     </model>
 </mule>

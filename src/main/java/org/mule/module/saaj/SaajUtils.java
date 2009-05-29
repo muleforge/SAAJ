@@ -24,6 +24,7 @@ public class SaajUtils {
      * Build a <code>SOAPMessage</code> from an <code>InputStream</code>.
      *
      * @param input the stream of XML to create the <code>SOAPMessage</code> from.
+     * @param messageFactory a reference to the MessageFactory to use
      * @return the <code>SOAPMessage</code>  constructed from the input
      */
     public static SOAPMessage buildSOAPMessage(InputStream input, MessageFactory messageFactory) {
@@ -44,6 +45,7 @@ public class SaajUtils {
      * Build a <code>SOAPMessage</code> from an <code>InputStream</code>.
      * @param input the <code>InputStream</code> to build the message from
      * @param headers A <code>Map</code> used to populate the SOAP headers of the <code>SOAPMessage</code>
+     * @param messageFactory A reference to the <code>MessageFactory</code> to be used
      * @return the constructed <code>SOAPMessage</code>
      */
     public static SOAPMessage buildSOAPMessage(InputStream input, Map<String, String> headers,
@@ -84,7 +86,7 @@ public class SaajUtils {
         }
         return byteStream.toByteArray();
     }
-    
+
     /**
      * Extract the first <code>Node</code> contaning the payload of a <code>SOAPBody</code>/
      *
@@ -115,7 +117,7 @@ public class SaajUtils {
         try {
             result = soapMessage.getSOAPBody().getFault() != null;
         } catch (SOAPException ex) {
-            throw new MuleRuntimeException(SaajMessages.failedToEvaluateFault(), ex);              
+            throw new MuleRuntimeException(SaajMessages.failedToEvaluateFault(), ex);
         }
         return result;
     }

@@ -28,7 +28,6 @@ public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransf
     DocumentBuilder builder;
     MessageFactory messageFactory;
 
-
     public SOAPMessageToDocumentTransformer() throws SOAPException {
         super();
         try {
@@ -37,6 +36,10 @@ public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransf
         } catch (ParserConfigurationException e) {
             throw new MuleRuntimeException(SaajMessages.failedToCreateDocumentBuilder(), e);
         }
+    }
+
+    public void setThrowExceptionOnFault(boolean throwExceptionOnFault) {
+        this.throwExceptionOnFault = throwExceptionOnFault;
     }
 
     public Object transform(MuleMessage muleMessage, String s) throws TransformerException {
@@ -70,7 +73,7 @@ public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransf
         return result;
     }
 
-    void populateHeaders(SOAPMessage soapMessage, MuleMessage muleMessage) {
+    private void populateHeaders(SOAPMessage soapMessage, MuleMessage muleMessage) {
         try {
             if (soapMessage.getSOAPHeader() != null) {
                 Iterator elements = soapMessage.getSOAPHeader().getChildElements();
@@ -119,7 +122,4 @@ public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransf
     }
 
 
-    public void setThrowExceptionOnFault(boolean throwExceptionOnFault) {
-        this.throwExceptionOnFault = throwExceptionOnFault;
-    }
 }

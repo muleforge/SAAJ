@@ -54,14 +54,7 @@
                             The namespace prefix to use when propagating message properties to SOAP headers.
                         </xsd:documentation>
                     </xsd:annotation>
-                </xsd:attribute>
-                <xsd:attribute name="throwExceptionOnFault" type="xsd:boolean">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            Whether or not to throw an exception when a SOAP fault is encountered. False by default.
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:attribute>
+                </xsd:attribute>               
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
