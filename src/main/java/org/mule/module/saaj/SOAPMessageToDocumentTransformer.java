@@ -57,6 +57,10 @@ public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransf
 
         SOAPMessage soapMessage = SaajUtils.buildSOAPMessage(inputStream, messageFactory);
 
+        if (logger.isDebugEnabled()) {
+            logger.debug("SOAPMessage: \n " + SaajUtils.getSOAPMessageAsString(soapMessage));
+        }
+
         if (throwExceptionOnFault && SaajUtils.containsFault(soapMessage)) {
             throwFaultException(soapMessage);
         }

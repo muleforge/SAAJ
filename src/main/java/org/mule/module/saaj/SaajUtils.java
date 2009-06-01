@@ -23,7 +23,7 @@ public class SaajUtils {
     /**
      * Build a <code>SOAPMessage</code> from an <code>InputStream</code>.
      *
-     * @param input the stream of XML to create the <code>SOAPMessage</code> from.
+     * @param input          the stream of XML to create the <code>SOAPMessage</code> from.
      * @param messageFactory a reference to the MessageFactory to use
      * @return the <code>SOAPMessage</code>  constructed from the input
      */
@@ -43,8 +43,9 @@ public class SaajUtils {
 
     /**
      * Build a <code>SOAPMessage</code> from an <code>InputStream</code>.
-     * @param input the <code>InputStream</code> to build the message from
-     * @param headers A <code>Map</code> used to populate the SOAP headers of the <code>SOAPMessage</code>
+     *
+     * @param input          the <code>InputStream</code> to build the message from
+     * @param headers        A <code>Map</code> used to populate the SOAP headers of the <code>SOAPMessage</code>
      * @param messageFactory A reference to the <code>MessageFactory</code> to be used
      * @return the constructed <code>SOAPMessage</code>
      */
@@ -72,6 +73,7 @@ public class SaajUtils {
 
     /**
      * Serializes a <code>SOAPMessage</code> as XML encoded as a byte array
+     *
      * @param message the <code>SOAPMessage</code> to encode as bytes
      * @return the encoded <code>SOAPMessage</code>
      */
@@ -85,6 +87,16 @@ public class SaajUtils {
             throw new MuleRuntimeException(SaajMessages.failedToBuildSOAPMessage(), ex);
         }
         return byteStream.toByteArray();
+    }
+
+    /**
+     * Serialize a <code>SOAPMessage</code> as a String
+     *
+     * @param message the <code>SOAPMessage</code>
+     * @return the String value of the <code>SOAPMessage</code>
+     */
+    public static String getSOAPMessageAsString(SOAPMessage message) {
+        return new String(getSOAPMessageAsBytes(message));
     }
 
     /**
@@ -109,6 +121,7 @@ public class SaajUtils {
 
     /**
      * Determine if a SOAP fault is present in a <code>SOAPMessage</code>'s body
+     *
      * @param soapMessage the <code>SOAPMessage</code> to evaluate
      * @return true if the message contains a fault, false if not
      */

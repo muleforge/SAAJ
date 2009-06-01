@@ -55,6 +55,10 @@ public class DocumentToSOAPMessageTransformer extends AbstractMessageAwareTransf
             throw new TransformerException(SaajMessages.failedToBuildSOAPMessage());
         }
 
+        if (logger.isDebugEnabled()) {
+            logger.debug("Transformation result: " + SaajUtils.getSOAPMessageAsString(soapMessage));
+        }
+
         return SaajUtils.getSOAPMessageAsBytes(soapMessage);
     }
 
