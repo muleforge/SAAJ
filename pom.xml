@@ -26,7 +26,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>mule-module-saaj-2.2.1.0-SNAPSHOT</finalName>
+                    <finalName>mule-module-saaj-${version}</finalName>
                     <descriptors>
                         <descriptor>assembly.xml</descriptor>
                     </descriptors>
@@ -225,6 +225,7 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-core</artifactId>
             <version>5.1.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mule.transports</groupId>
