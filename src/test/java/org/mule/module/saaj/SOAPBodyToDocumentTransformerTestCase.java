@@ -35,7 +35,9 @@ public class SOAPBodyToDocumentTransformerTestCase extends AbstractTransformerTe
     }
 
     public Transformer getTransformer() throws Exception {
-        return new SOAPMessageToDocumentTransformer();
+        Transformer transformer = new SOAPMessageToDocumentTransformer();
+        transformer.setMuleContext(muleContext);
+        return transformer;
     }
 
     public Transformer getRoundTripTransformer() throws Exception {
@@ -57,6 +59,7 @@ public class SOAPBodyToDocumentTransformerTestCase extends AbstractTransformerTe
         XmlToDomDocument transformer = new XmlToDomDocument();
 
         transformer.setReturnClass(Document.class);
+        transformer.setMuleContext(muleContext);
 
         String soapResponse;
         try {
