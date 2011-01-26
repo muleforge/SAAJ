@@ -8,7 +8,6 @@ public class ForwardingComponent implements Callable {
 
     public Object onCall(MuleEventContext context) throws MuleException {
 
-        context.transformMessage();
         context.dispatchEvent(context.getMessage(), "jms://messages");
 
         return "<status>SUBMITTED</status>";

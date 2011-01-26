@@ -21,7 +21,7 @@
 
     <saaj:soap-message-to-document-transformer name="soapBodyToDocument"/>
     <saaj:document-to-soap-message-transformer name="documentToSoapMessage"/>
-    <vm:connector name="vmConnector" />
+    <vm:connector name="vmConnector"/>
 
     <model name="saajReceiverModel">
 
@@ -32,18 +32,23 @@
             <outbound>
                 <pass-through-router>
                     <vm:outbound-endpoint path="soap.out">
-                        <transformers>
-                            <message-properties-transformer>
-                                <delete-message-property key="MULE_CORRELATION_ID"/>
-                                <delete-message-property key="MULE_ENCODING"/>
-                                <delete-message-property key="MULE_ENDPOINT"/>
-                                <delete-message-property key="MULE_ORIGINATING_ENDPOINT"/>
-                                <delete-message-property key="MULE_REMOTE_SYNC"/>
-                                <delete-message-property key="MULE_SESSION"/>
-                            </message-properties-transformer>
-                            <saaj:document-to-soap-message-transformer/>
-
-                        </transformers>
+                        <message-properties-transformer scope="invocation">
+                            <delete-message-property key="MULE_CORRELATION_ID"/>
+                            <delete-message-property key="MULE_ENCODING"/>
+                            <delete-message-property key="MULE_ENDPOINT"/>
+                            <delete-message-property key="MULE_ORIGINATING_ENDPOINT"/>
+                            <delete-message-property key="MULE_REMOTE_SYNC"/>
+                            <delete-message-property key="MULE_SESSION"/>
+                        </message-properties-transformer>
+                        <message-properties-transformer scope="outbound">
+                            <delete-message-property key="MULE_CORRELATION_ID"/>
+                            <delete-message-property key="MULE_ENCODING"/>
+                            <delete-message-property key="MULE_ENDPOINT"/>
+                            <delete-message-property key="MULE_ORIGINATING_ENDPOINT"/>
+                            <delete-message-property key="MULE_REMOTE_SYNC"/>
+                            <delete-message-property key="MULE_SESSION"/>
+                        </message-properties-transformer>
+                        <saaj:document-to-soap-message-transformer/>
                     </vm:outbound-endpoint>
                 </pass-through-router>
             </outbound>
@@ -56,18 +61,17 @@
             <outbound>
                 <pass-through-router>
                     <vm:outbound-endpoint path="namespace.out">
-                        <transformers>
-                            <message-properties-transformer>
-                                <delete-message-property key="MULE_CORRELATION_ID"/>
-                                <delete-message-property key="MULE_ENCODING"/>
-                                <delete-message-property key="MULE_ENDPOINT"/>
-                                <delete-message-property key="MULE_ORIGINATING_ENDPOINT"/>
-                                <delete-message-property key="MULE_REMOTE_SYNC"/>
-                                <delete-message-property key="MULE_SESSION"/>
-                            </message-properties-transformer>
-                            <saaj:document-to-soap-message-transformer headerPrefix="demic"
-                                                                       headerURI="http://demic.com"/>
-                        </transformers>
+                        <message-properties-transformer>
+                            <delete-message-property key="MULE_CORRELATION_ID"/>
+                            <delete-message-property key="MULE_ENCODING"/>
+                            <delete-message-property key="MULE_ENDPOINT"/>
+                            <delete-message-property key="MULE_ORIGINATING_ENDPOINT"/>
+                            <delete-message-property key="MULE_REMOTE_SYNC"/>
+                            <delete-message-property key="MULE_SESSION"/>
+                        </message-properties-transformer>
+                        <saaj:document-to-soap-message-transformer headerPrefix="demic"
+                                                                   headerURI="http://demic.com"/>
+
                     </vm:outbound-endpoint>
                 </pass-through-router>
             </outbound>
@@ -76,9 +80,7 @@
         <service name="soapInboundService">
             <inbound>
                 <vm:inbound-endpoint path="soap.in">
-                    <transformers>
-                        <saaj:soap-message-to-document-transformer/>
-                    </transformers>
+                    <saaj:soap-message-to-document-transformer/>
                 </vm:inbound-endpoint>
             </inbound>
             <outbound>
@@ -91,9 +93,7 @@
         <service name="soapNoFaultInboundService">
             <inbound>
                 <vm:inbound-endpoint path="soap.no-fault.in">
-                    <transformers>
-                        <saaj:soap-message-to-document-transformer throwExceptionOnFault="true"/>
-                    </transformers>
+                    <saaj:soap-message-to-document-transformer throwExceptionOnFault="true"/>
                 </vm:inbound-endpoint>
             </inbound>
             <outbound>
@@ -106,9 +106,7 @@
         <service name="soapWithFaultInboundService">
             <inbound>
                 <vm:inbound-endpoint path="soap.fault.in" exchange-pattern="one-way">
-                    <transformers>
-                        <saaj:soap-message-to-document-transformer throwExceptionOnFault="true"/>
-                    </transformers>
+                    <saaj:soap-message-to-document-transformer throwExceptionOnFault="true"/>
                 </vm:inbound-endpoint>
             </inbound>
             <outbound>

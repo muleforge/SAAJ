@@ -1,19 +1,19 @@
 package org.mule.module.saaj;
 
-import org.mule.transformer.AbstractMessageAwareTransformer;
-import org.mule.api.transformer.TransformerException;
-import org.mule.api.MuleRuntimeException;
 import org.mule.api.MuleMessage;
+import org.mule.api.MuleRuntimeException;
+import org.mule.api.transformer.TransformerException;
 import org.mule.module.saaj.i18n.SaajMessages;
+import org.mule.transformer.AbstractMessageTransformer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import javax.xml.soap.*;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.DocumentBuilder;
-import java.io.InputStream;
+import javax.xml.soap.*;
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Iterator;
 
 /**
@@ -21,7 +21,7 @@ import java.util.Iterator;
  * from a <code>SOAPMessage</code>,to a <code>org.w3c.dom.Document</code>.  Headers in the SOAP
  * message are propgating as properties on the <code>MuleMessage</code>.
  */
-public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransformer {
+public class SOAPMessageToDocumentTransformer extends AbstractMessageTransformer {
 
     private boolean throwExceptionOnFault = true;
 
@@ -42,7 +42,7 @@ public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransf
         this.throwExceptionOnFault = throwExceptionOnFault;
     }
 
-    public Object transform(MuleMessage muleMessage, String s) throws TransformerException {
+    public Object transformMessage(MuleMessage muleMessage, String s) throws TransformerException {
 
         InputStream inputStream;
 
@@ -87,7 +87,7 @@ public class SOAPMessageToDocumentTransformer extends AbstractMessageAwareTransf
                     String headerValue = header.getValue();
                     logger.debug(String.format("Adding \"%s\" message property with value \"%s\" from the SOAP header",
                             headerName, headerValue));
-                    muleMessage.setProperty(headerName, headerValue);
+                    muleMessage.setOutboundProperty(headerName, headerValue);
                 }
             }
         } catch (SOAPException e) {
