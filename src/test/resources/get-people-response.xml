@@ -4,24 +4,24 @@
   <ns1:return>
     <ns2:Person xmlns:ns2="http://services.testmodels.tck.mule.org">
       <ns2:address>
-        <ns2:address xmlns:ns3="http://www.w3.org/2001/XMLSchema-instance" ns3:nil="true"></ns2:address>
-        <ns2:postcode xmlns:ns3="http://www.w3.org/2001/XMLSchema-instance" ns3:nil="true"></ns2:postcode>
+        <ns2:address xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></ns2:address>
+        <ns2:postcode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></ns2:postcode>
       </ns2:address>
       <ns2:firstName>Barney</ns2:firstName>
       <ns2:lastName>Rubble</ns2:lastName>
     </ns2:Person>
     <ns2:Person xmlns:ns2="http://services.testmodels.tck.mule.org">
       <ns2:address>
-        <ns2:address xmlns:ns3="http://www.w3.org/2001/XMLSchema-instance" ns3:nil="true"></ns2:address>
-        <ns2:postcode xmlns:ns3="http://www.w3.org/2001/XMLSchema-instance" ns3:nil="true"></ns2:postcode>
+        <ns2:address xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></ns2:address>
+        <ns2:postcode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></ns2:postcode>
       </ns2:address>
       <ns2:firstName>Fred</ns2:firstName>
       <ns2:lastName>Flintstone</ns2:lastName>
     </ns2:Person>
     <ns2:Person xmlns:ns2="http://services.testmodels.tck.mule.org">
       <ns2:address>
-        <ns2:address xmlns:ns3="http://www.w3.org/2001/XMLSchema-instance" ns3:nil="true"></ns2:address>
-        <ns2:postcode xmlns:ns3="http://www.w3.org/2001/XMLSchema-instance" ns3:nil="true"></ns2:postcode>
+        <ns2:address xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></ns2:address>
+        <ns2:postcode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></ns2:postcode>
       </ns2:address>
       <ns2:firstName>Wilma</ns2:firstName>
       <ns2:lastName>Flintstone</ns2:lastName>

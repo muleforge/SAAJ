@@ -1,23 +1,20 @@
 <mule xmlns="http://www.mulesoft.org/schema/mule/core"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:spring="http://www.springframework.org/schema/beans"
-      xmlns:context="http://www.springframework.org/schema/context"
       xmlns:xm="http://www.mulesoft.org/schema/mule/xml"
       xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
       xmlns:saaj="http://www.mulesoft.org/schema/mule/saaj"
       xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.0/mule.xsd
-       http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/3.0/mule-xml.xsd
-       http://www.mulesoft.org/schema/mule/saaj http://www.mulesoft.org/schema/mule/saaj/3.0/mule-saaj.xsd
-       http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.0/mule-vm.xsd
+       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd
+       http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/3.1/mule-xml.xsd
+       http://www.mulesoft.org/schema/mule/saaj http://www.mulesoft.org/schema/mule/saaj/3.1/mule-saaj.xsd
+       http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.1/mule-vm.xsd
        "
         >
 
     <xm:xml-to-dom-transformer name="xmlToDom" returnClass="org.w3c.dom.Document"/>
     <xm:dom-to-xml-transformer name="domToXml" returnClass="java.lang.String"/>
     <xm:xml-prettyprinter-transformer name="uglyXmlToPrettyXml" returnClass="java.lang.String"/>
+
 
     <saaj:soap-message-to-document-transformer name="soapBodyToDocument"/>
     <saaj:document-to-soap-message-transformer name="documentToSoapMessage"/>
