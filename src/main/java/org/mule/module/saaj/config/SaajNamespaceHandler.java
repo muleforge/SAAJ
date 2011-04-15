@@ -9,9 +9,10 @@
  */
 package org.mule.module.saaj.config;
 
-import org.mule.config.spring.parsers.specific.TransformerDefinitionParser;
 import org.mule.config.spring.handlers.AbstractMuleNamespaceHandler;
-import org.mule.module.saaj.*;
+import org.mule.config.spring.parsers.specific.MessageProcessorDefinitionParser;
+import org.mule.module.saaj.DocumentToSOAPMessageTransformer;
+import org.mule.module.saaj.SOAPMessageToDocumentTransformer;
 
 /**
  * Registers a Bean Definition Parser for handling the SAAJ transformers.
@@ -19,9 +20,9 @@ import org.mule.module.saaj.*;
 public class SaajNamespaceHandler extends AbstractMuleNamespaceHandler {
     public void init() {
         registerBeanDefinitionParser("soap-message-to-document-transformer",
-                new TransformerDefinitionParser(SOAPMessageToDocumentTransformer.class));
+                new MessageProcessorDefinitionParser(SOAPMessageToDocumentTransformer.class));
         registerBeanDefinitionParser("document-to-soap-message-transformer",
-                new TransformerDefinitionParser(DocumentToSOAPMessageTransformer.class));
+                new MessageProcessorDefinitionParser(DocumentToSOAPMessageTransformer.class));
         
     }
 }

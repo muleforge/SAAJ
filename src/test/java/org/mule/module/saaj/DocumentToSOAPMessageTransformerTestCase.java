@@ -33,7 +33,9 @@ public class DocumentToSOAPMessageTransformerTestCase extends AbstractTransforme
     }
 
     public Transformer getTransformer() throws Exception {
-        return new DocumentToSOAPMessageTransformer();
+        Transformer transformer = new DocumentToSOAPMessageTransformer();
+        transformer.setMuleContext(muleContext);
+        return transformer;
     }
 
     public Transformer getRoundTripTransformer() throws Exception {
@@ -43,6 +45,7 @@ public class DocumentToSOAPMessageTransformerTestCase extends AbstractTransforme
     public Object getTestData() {
         XmlToDomDocument transformer = new XmlToDomDocument();
         transformer.setReturnClass(Document.class);
+        transformer.setMuleContext(muleContext);
 
         String body;
         try {
@@ -77,6 +80,7 @@ public class DocumentToSOAPMessageTransformerTestCase extends AbstractTransforme
 
         try {
             Transformer transformer = new XmlPrettyPrinter();
+            transformer.setMuleContext(muleContext);
             xml1 = (String) transformer.transform(normalizeString(new String((byte[]) expected)));
             xml2 = (String) transformer.transform(normalizeString(new String((byte[]) result)));
             return XMLUnit.compareXML(xml1, xml2).similar();
